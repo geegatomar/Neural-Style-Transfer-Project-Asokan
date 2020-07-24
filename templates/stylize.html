@@ -1,0 +1,191 @@
+{% extends 'base.html' %}
+
+{% block title %} Stylize {% endblock %}
+
+{% block css %}
+
+    
+    .sidenav {
+        width: 180px;
+        position: fixed;
+        z-index: 1;
+        margin: 15px;
+        border-radius: 8px;
+        background: #343a40;
+        overflow-x: hidden;
+    }
+
+    label {
+        padding: 6px 8px 6px 16px;
+        text-decoration: none;
+        font-size: 17px;
+        background-color: #343a40;
+        color: grey;
+        display: block;
+        outline: none;
+        border: none;
+        width: 180px;
+        cursor: pointer;
+    }
+
+    label:hover{
+        color: #FFF;
+        border-left: 4px solid #b4aa11;
+    }
+
+    .my-btn {
+        padding: 6px 8px 6px 16px;
+        text-decoration: none;
+        font-size: 17px;
+        color: grey;
+        display: block;
+        outline: none;
+        border: none;
+        width: 180px;
+        background: linear-gradient(180deg,#f1e41c,#b4aa11);;
+    }
+
+    .my-btn:hover {
+        opacity: 1 !important;
+        box-shadow: 0 5px 15px rgba(81,113,144,.4);
+    }
+
+    .pic-box {
+        position: fixed;
+        z-index: 1;
+        margin-top: 15px;
+        margin-left: 210px;
+        margin-right: 15px;
+        border-radius: 8px;
+        background: #343a40;
+        overflow-x: hidden;
+        padding: 8px 0;
+        color: #FFF;
+    }
+
+    .welcome-text {
+        margin: 40px;
+    }
+
+    .img-div {
+        margin: 40px;
+    }
+
+    img {
+        display: none;
+        max-width: 400px;
+        max-height: 400px;
+        margin: 15px;
+    }
+{% endblock %}
+
+{% block fullwidth %}
+
+ <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                  <a class="navbar-brand" href="/">Neural Art</a>
+                  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav ml-auto">
+                      <a class="nav-item nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                      <a class="nav-item nav-link" href="/about">About</a>
+                      <a class="nav-item nav-link active" href="/stylize">Stylize</a>
+                      <div class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Resources
+                          </a>
+                          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="https://arxiv.org/abs/1508.06576">Research Paper</a>
+                            <a class="dropdown-item" href="https://www.tensorflow.org/tutorials/generative/style_transfer">Tenser Flow</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="https://gitlab.com/vaseem_naazleen_shaik/neural-style-transfer">GitLab Repo</a>
+                          </div>
+                        </div>
+                  </div>
+                  </div>
+              </nav>
+</div>
+
+    <div class="sidenav">
+        <form action="/uploader" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
+            <label for = "contentFile" id="contentLabel" class="text-center">Content Image</label> 
+            <!-- <button  onclick="document.getElementById('contentFile').click()">Content Image</button> -->
+                <input type="file" name="contentFile" id="contentFile" style="display: none;" onchange="return validateImage()">
+            <!-- <button  onclick="document.getElementById('styleFile').click()">Style Image</button> -->
+            <label for = "styleFile" id="styleLabel" class="text-center">Style Image</label > 
+                <input type="file" name="styleFile" id="styleFile" style="display: none;" onchange="return validateImage()">
+            <!-- <button type="button" class="btn btn-primary submit-btn my-btn" onclick="document.getElementById('submitFiles').click()">Submit</button>-->
+                <input class = "my-btn" type="submit" value="Submit" name="submit" id="submitFiles">      
+        </form>
+    </div>
+    
+    <div class="pic-box">
+        <div class="welcome-text">
+            <h2>Welcome to Neural Art Photo Editor</h2>
+            <br>
+            <p>
+                Choose content and style image
+            </p>
+        </div>
+        <div class="img-div">
+            <img id="contentImg" src="#" class="float-left" />
+            <img id="styleImg" src=# class="float-right" />
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block script %}
+    document.body.style.backgroundColor = "#23262a";
+
+    function validateForm() {
+        var empt = document.forms["form1"]["fileToUpload"].value;
+        if (empt == "") {
+            alert("Please upload an image");
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    function validateImage() {
+        var formData = new FormData();
+
+        var file = document.getElementById("fileToUpload").files[0];
+
+        formData.append("Filedata", file);
+        var t = file.type.split('/').pop().toLowerCase();
+        if (t != "jpeg" && t != "jpg" && t != "png" && t != "bmp") {
+            alert('Please select a valid image file');
+            document.getElementById("img").value = '';
+            return false;
+        }
+        else return true;
+    }
+
+    function readURL(input, imgClass, labelClass) {
+        if (input.files && input.files[0]) {
+          var reader = new FileReader();
+          reader.onload = function(e) {
+            $('#'+imgClass).attr('src', e.target.result);
+            document.getElementById(imgClass).style.display = 'block';
+            document.getElementById(labelClass).style.color = '#d9cd17';
+            $(".welcome-text").empty();
+          }
+          reader.readAsDataURL(input.files[0]);
+        }
+      }
+      
+      $("#contentFile").change(function() {
+        readURL(this, 'contentImg', 'contentLabel');
+      });
+
+      $("#styleFile").change(function() {
+        readURL(this, 'styleImg', 'styleLabel');
+      });
+
+
+{% endblock %}
