@@ -6,7 +6,7 @@ The static folder holds the img, css, javascript folders.
 the template folder has all the html files of each webpage which is rendered from the main file **app.py **.
 
 #### Content Image
-![Content image](static/img/lion.jpeg){: width="120px"}
+![Content image](static/img/lion.jpeg){:width="50%"}
 <img src="static/img/lion.jpeg" style="width:4%">
 
 #### Style Image
