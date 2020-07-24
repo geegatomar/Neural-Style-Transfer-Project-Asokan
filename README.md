@@ -7,7 +7,7 @@ the template folder has all the html files of each webpage which is rendered fro
 
 #### Content Image
 ![Content image](static/img/lion.jpeg )
-<img src="static/img/lion.jpeg" style="width:20px">
+<img src="static/img/lion.jpeg" width="80">
 
 #### Style Image
 ![Style image](static/img/style15.jpg)
