@@ -3,7 +3,7 @@ A deep learning project on Neural Style Transfer implemented using tensorflow_hu
 
 To run the website, run ``` python3 app.py``` in the terminal.
 The static folder holds the img, css, javascript folders.
-the template folder has all the html files of each webpage which is rendered from the main file **app.py **.
+the template folder has all the html files of each webpage which is rendered from the main file **app.py**.
 
 #### Content Image
 <img src="static/img/lion.jpeg" width="200">
